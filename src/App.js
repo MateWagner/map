@@ -13,11 +13,16 @@ const VESZPREM_LONG = Number(process.env.REACT_APP_VESZPREM_LONG);
 
 function App() {
   const [coordinatesList, setCoordinatesList] = useState([]);
+  const [routeCoordinates, setRouteCoordinates] = useState([]);
   const [viewport, setViewport] = useState({
     latitude: VESZPREM_LAT,
     longitude: VESZPREM_LONG,
     zoom: 11,
   });
+
+  const setRoute = (coordinates) => {
+    setRouteCoordinates(coordinates);
+  };
 
   const addMarkers = (event) => {
     if (coordinatesList.length >= MAX_MARKER_COUNT) return;
@@ -29,7 +34,7 @@ function App() {
   return (
     <div>
       {coordinatesList.length > 0 && (
-        <RouteLabel coordinatesList={coordinatesList} />
+        <RouteLabel coordinatesList={coordinatesList} setRoute={setRoute} />
       )}
       <ReactMapGL
         mapboxAccessToken={API_TOKEN}
@@ -41,6 +46,7 @@ function App() {
         }}
         onDblClick={addMarkers}
       >
+        <RouteLayer routeCoordinates={routeCoordinates} />
         <Markers coordinatesList={coordinatesList} />
       </ReactMapGL>
     </div>
