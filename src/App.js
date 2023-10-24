@@ -10,6 +10,7 @@ const MAX_MARKER_COUNT = 3;
 const API_TOKEN = process.env.REACT_APP_API_TOKEN;
 const VESZPREM_LAT = Number(process.env.REACT_APP_VESZPREM_LAT);
 const VESZPREM_LONG = Number(process.env.REACT_APP_VESZPREM_LONG);
+const MAP_STYLE = process.env.REACT_APP_MAP_STYLE;
 
 function App() {
   const [coordinatesList, setCoordinatesList] = useState([]);
@@ -37,9 +38,10 @@ function App() {
         <RouteLabel coordinatesList={coordinatesList} setRoute={setRoute} />
       )}
       <ReactMapGL
+        id="map-component"
         mapboxAccessToken={API_TOKEN}
         initialViewState={viewport}
-        mapStyle="mapbox://styles/mapbox/streets-v9"
+        mapStyle={MAP_STYLE}
         style={{ width: "100vw", height: "100vh" }}
         onViewportChange={(viewport) => {
           setViewport(viewport);
